@@ -1,9 +1,10 @@
 //
 //  MapViewController.swift
-//  SidebarMenu
+//  Switchboard
 //
-//  Created by Simon Ng on 2/2/15.
-//  Copyright (c) 2015 AppCoda. All rights reserved.
+//  Created by Aaron Liberatore on 4/7/16.
+//  Copyright © 2016 Aaron. All rights reserved.
+//
 //
 
 import UIKit
