@@ -11,10 +11,16 @@ import UIKit
 class MenuController: UITableViewController {
 
     @IBOutlet var username:UILabel!
-    @IBOutlet var userImage:UIImageView!
+    @IBOutlet var userImage:UIImageView?
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if let savedUser = loadUser() {
+            username.text = savedUser.firstName + " " + savedUser.lastName
+            userImage!.image = savedUser.profilePicture
+            
+        }
+        
 
         // Uncomment the following line to preserve selection between presentations
         // self.clearsSelectionOnViewWillAppear = false
@@ -27,7 +33,10 @@ class MenuController: UITableViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
+    func loadUser() -> User? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(User.ArchiveURL.path!) as? User
+    }
 
     
     // MARK: - Table view data source

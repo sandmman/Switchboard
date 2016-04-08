@@ -17,9 +17,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationMan
             textView.delegate = self
         }
     }
-    
-    @IBOutlet var characterCountLabel: UILabel!
-    
+        
     //var loc: CLLocationCoordinate2D
     
     override func viewDidLoad() {
@@ -67,11 +65,19 @@ class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationMan
     // MARK: - Actions
     
     func createNewTrip(text: String) {
-        let newTrip = Trip(title: text,descrip: text, timestamp: NSDate(), location: nil)
+        var name = "Unidentified"
+        
+        if let savedUser = loadUser() {
+            name = savedUser.firstName + " " + savedUser.lastName
+        }
+        
+        let newTrip = Trip(name: name, title: text,descrip: text, timestamp: NSDate(), location: nil)
         TripCenter.sharedInstance.postTrip(newTrip)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+    func loadUser() -> User? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(User.ArchiveURL.path!) as? User
+    }
     private func alert(message : String) {
         let alert = UIAlertController(title: "Oops, something went wrong.", message: message, preferredStyle: UIAlertControllerStyle.Alert)
         let action = UIAlertAction(title: "Ok", style: .Default, handler: nil)
