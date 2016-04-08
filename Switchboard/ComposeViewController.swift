@@ -8,13 +8,28 @@
 
 import UIKit
 import CoreLocation
+//import KMPlaceholderTextView
 
 class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationManagerDelegate {
     
+    @IBOutlet var textView: UITextView! {
+        didSet {
+            textView.delegate = self
+        }
+    }
+    
     @IBOutlet var characterCountLabel: UILabel!
+    
+    //var loc: CLLocationCoordinate2D
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        /*let locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.startUpdatingLocation()*/
     }
     
     override func didReceiveMemoryWarning() {
@@ -23,12 +38,11 @@ class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationMan
     }
     
     @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
-        print("FUCK")
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func sendButtonPressed(sender: AnyObject) {
-        //createNewYak(textView.text)
+        createNewTrip(textView.text)
     }
     
     // MARK: - UITextView delegate
@@ -42,8 +56,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationMan
         
         //limit length of Yak
         let textLength = textView.text.characters.count + text.characters.count - range.length
-        // range.length is 1 when deleting a character
-        characterCountLabel.text = String(200 - textLength)
+
         if textLength >= 200 {
             return false
         } else {
@@ -53,11 +66,11 @@ class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationMan
     
     // MARK: - Actions
     
-    func createNewYak(text: String) {
-
+    func createNewTrip(text: String) {
+        let newTrip = Trip(title: text,descrip: text, timestamp: NSDate(), location: nil)
+        TripCenter.sharedInstance.postTrip(newTrip)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    // MARK: - Private functions
     
     private func alert(message : String) {
         let alert = UIAlertController(title: "Oops, something went wrong.", message: message, preferredStyle: UIAlertControllerStyle.Alert)

@@ -8,13 +8,21 @@
 
 import UIKit
 
+protocol PlacesTableViewCellDelegate {
+
+}
+
 class PlacesTableViewCell: UITableViewCell {
     
     @IBOutlet weak var postImageView:UIImageView!
     @IBOutlet weak var authorImageView:UIImageView!
     @IBOutlet weak var postTitleLabel:UILabel!
     @IBOutlet weak var authorLabel:UILabel!
-
+    @IBOutlet weak var timestamp:UILabel!
+    
+    var delegate: PlacesTableViewCellDelegate?
+    var indexPath: NSIndexPath?
+    
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code

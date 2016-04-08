@@ -10,6 +10,9 @@ import UIKit
 
 class MenuController: UITableViewController {
 
+    @IBOutlet var username:UILabel!
+    @IBOutlet var userImage:UIImageView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 

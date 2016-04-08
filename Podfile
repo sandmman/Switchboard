@@ -4,6 +4,7 @@
 use_frameworks!
 
 pod 'Firebase', '>= 2.5.1'
+#pod 'KMPlaceholderTextView', '~> 1.2.0' 
 
 target 'Switchboard' do
 

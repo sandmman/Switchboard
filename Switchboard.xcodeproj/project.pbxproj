@@ -20,10 +20,11 @@
 		E3CA83A31CB62A28003C9BD7 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E3CA838C1CB629C6003C9BD7 /* Images.xcassets */; };
 		E3CA83AA1CB6A29D003C9BD7 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83A91CB6A29D003C9BD7 /* SettingsTableViewController.swift */; };
 		E3CA83AC1CB6A2F6003C9BD7 /* SettingsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83AB1CB6A2F6003C9BD7 /* SettingsTableViewCell.swift */; };
-		E3CA83AF1CB6A772003C9BD7 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83AE1CB6A772003C9BD7 /* Place.swift */; };
-		E3CA83B71CB6BED7003C9BD7 /* EntryCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83B61CB6BED7003C9BD7 /* EntryCenter.swift */; };
+		E3CA83AF1CB6A772003C9BD7 /* Trip.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83AE1CB6A772003C9BD7 /* Trip.swift */; };
+		E3CA83B71CB6BED7003C9BD7 /* TripCenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83B61CB6BED7003C9BD7 /* TripCenter.swift */; };
 		E3CA83B91CB6D09A003C9BD7 /* ComposeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83B81CB6D09A003C9BD7 /* ComposeViewController.swift */; };
 		E3CA83BB1CB6D8A8003C9BD7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83BA1CB6D8A8003C9BD7 /* DetailViewController.swift */; };
+		E3FCE99D1CB75D14003C79F8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FCE99C1CB75D14003C79F8 /* User.swift */; };
 		F4702A161A7F342F00E30A3C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4702A151A7F342F00E30A3C /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -55,12 +56,13 @@
 		E3CA83951CB629C6003C9BD7 /* SWRevealViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		E3CA83A91CB6A29D003C9BD7 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 		E3CA83AB1CB6A2F6003C9BD7 /* SettingsTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsTableViewCell.swift; sourceTree = "<group>"; };
-		E3CA83AE1CB6A772003C9BD7 /* Place.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
-		E3CA83B61CB6BED7003C9BD7 /* EntryCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryCenter.swift; sourceTree = "<group>"; };
+		E3CA83AE1CB6A772003C9BD7 /* Trip.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Trip.swift; sourceTree = "<group>"; };
+		E3CA83B61CB6BED7003C9BD7 /* TripCenter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TripCenter.swift; sourceTree = "<group>"; };
 		E3CA83B81CB6D09A003C9BD7 /* ComposeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ComposeViewController.swift; sourceTree = "<group>"; };
 		E3CA83BA1CB6D8A8003C9BD7 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
 		E3DD22CA1CB6AA8500AB145F /* Switchboard.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Switchboard.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3DD22CB1CB6AA8500AB145F /* Switchboard.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Switchboard.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		E3FCE99C1CB75D14003C79F8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		F4702A0A1A7F27DC00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4702A151A7F342F00E30A3C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -130,8 +132,9 @@
 		E3CA83AD1CB6A6AF003C9BD7 /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				E3CA83AE1CB6A772003C9BD7 /* Place.swift */,
-				E3CA83B61CB6BED7003C9BD7 /* EntryCenter.swift */,
+				E3CA83AE1CB6A772003C9BD7 /* Trip.swift */,
+				E3FCE99C1CB75D14003C79F8 /* User.swift */,
+				E3CA83B61CB6BED7003C9BD7 /* TripCenter.swift */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -311,13 +314,14 @@
 				E3CA83AC1CB6A2F6003C9BD7 /* SettingsTableViewCell.swift in Sources */,
 				E3CA83B91CB6D09A003C9BD7 /* ComposeViewController.swift in Sources */,
 				E3CA83AA1CB6A29D003C9BD7 /* SettingsTableViewController.swift in Sources */,
+				E3FCE99D1CB75D14003C79F8 /* User.swift in Sources */,
 				E3CA839A1CB629FD003C9BD7 /* MenuController.swift in Sources */,
 				E3CA839B1CB629FD003C9BD7 /* PlacesTableViewCell.swift in Sources */,
 				E3CA839C1CB629FD003C9BD7 /* PlacesTableViewController.swift in Sources */,
 				E3CA839D1CB629FD003C9BD7 /* PhotoViewController.swift in Sources */,
 				E3CA83A01CB629FD003C9BD7 /* SWRevealViewController.m in Sources */,
-				E3CA83B71CB6BED7003C9BD7 /* EntryCenter.swift in Sources */,
-				E3CA83AF1CB6A772003C9BD7 /* Place.swift in Sources */,
+				E3CA83B71CB6BED7003C9BD7 /* TripCenter.swift in Sources */,
+				E3CA83AF1CB6A772003C9BD7 /* Trip.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

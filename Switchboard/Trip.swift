@@ -8,41 +8,42 @@
 
 import UIKit
 import CoreLocation
-//import Firebase
+import Firebase
+import MapKit
 
-class Place: NSObject {
+class Trip: NSObject {
     var title: String
+    var descrip: String
     var timestamp: NSDate?
     //var photos: [Reply]
-    var netVoteCount: Int
     var location: CLLocationCoordinate2D?
-    //var snapshot: FDataSnapshot?
-    
-    init(title: String, timestamp: NSDate?, location: CLLocationCoordinate2D?) {
-        self.title = title
-        self.timestamp = timestamp
+    var snapshot: FDataSnapshot?
 
-        self.netVoteCount = 0
+    init(title: String, descrip: String, timestamp: NSDate?, location: CLLocationCoordinate2D?) {
+        self.title = title
+        self.descrip = descrip
+        self.timestamp = timestamp
         self.location = location
     }
     
     //we need an initializer for turning a dictionary from firebase into an object
-    /*init(dictionary: Dictionary<String, AnyObject>, snapshot: FDataSnapshot){
+    init(dictionary: Dictionary<String, AnyObject>, snapshot: FDataSnapshot){
         self.title = dictionary["title"] as! String
+        self.descrip = dictionary["descrip"] as! String
         let timeInterval = dictionary["timestamp"] as? Double
         if (timeInterval != nil){
             self.timestamp = NSDate(timeIntervalSince1970:-1 * timeInterval!)
         }
-        self.replies = [Reply]()
-        self.netVoteCount = 0
-        self.snapshot = snapshot
-    }*/
+        //let value = dictionary["location"] as! NSValue
+        //self.location = value.MKCoordinateValue
+    }
     
     func toDictionary() -> Dictionary<String, AnyObject> {
         return [
             "title": title,
+            "descrip":descrip,
             "timestamp": -1 * timestamp!.timeIntervalSince1970,
-            "votes": netVoteCount
+            //"location": NSValue(MKCoordinate: location!)
         ]
     }
     
