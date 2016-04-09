@@ -25,6 +25,7 @@
 		E3CA83BB1CB6D8A8003C9BD7 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83BA1CB6D8A8003C9BD7 /* DetailViewController.swift */; };
 		E3FCE99D1CB75D14003C79F8 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FCE99C1CB75D14003C79F8 /* User.swift */; };
 		E3FCE99F1CB821B9003C79F8 /* AccountTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FCE99E1CB821B9003C79F8 /* AccountTableViewController.swift */; };
+		E3FCE9A11CB89294003C79F8 /* MapView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3FCE9A01CB89294003C79F8 /* MapView.swift */; };
 		F4702A161A7F342F00E30A3C /* MapKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4702A151A7F342F00E30A3C /* MapKit.framework */; };
 /* End PBXBuildFile section */
 
@@ -63,6 +64,7 @@
 		E3DD22CB1CB6AA8500AB145F /* Switchboard.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Switchboard.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		E3FCE99C1CB75D14003C79F8 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E3FCE99E1CB821B9003C79F8 /* AccountTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountTableViewController.swift; sourceTree = "<group>"; };
+		E3FCE9A01CB89294003C79F8 /* MapView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapView.swift; sourceTree = "<group>"; };
 		F4702A0A1A7F27DC00E30A3C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F4702A151A7F342F00E30A3C /* MapKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MapKit.framework; path = System/Library/Frameworks/MapKit.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
@@ -117,6 +119,7 @@
 				E3CA83A91CB6A29D003C9BD7 /* SettingsTableViewController.swift */,
 				E3CA838C1CB629C6003C9BD7 /* Images.xcassets */,
 				E3CA838E1CB629C6003C9BD7 /* MapViewController.swift */,
+				E3FCE9A01CB89294003C79F8 /* MapView.swift */,
 				E3CA838F1CB629C6003C9BD7 /* MenuController.swift */,
 				E3CA83901CB629C6003C9BD7 /* PlacesTableViewCell.swift */,
 				E3CA83911CB629C6003C9BD7 /* PlacesTableViewController.swift */,
@@ -315,6 +318,7 @@
 				E3CA83AA1CB6A29D003C9BD7 /* SettingsTableViewController.swift in Sources */,
 				E3FCE99D1CB75D14003C79F8 /* User.swift in Sources */,
 				E3CA839A1CB629FD003C9BD7 /* MenuController.swift in Sources */,
+				E3FCE9A11CB89294003C79F8 /* MapView.swift in Sources */,
 				E3CA839B1CB629FD003C9BD7 /* PlacesTableViewCell.swift in Sources */,
 				E3CA839C1CB629FD003C9BD7 /* PlacesTableViewController.swift in Sources */,
 				E3CA839D1CB629FD003C9BD7 /* PhotoViewController.swift in Sources */,

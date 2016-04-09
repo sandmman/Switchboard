@@ -42,14 +42,52 @@
                         <subviews>
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="nsc-35-MTe">
                                 <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                                <gestureRecognizers/>
                             </mapView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="j2T-Lc-BTz" customClass="MapView" customModule="Switchboard" customModuleProvider="target">
+                                <rect key="frame" x="20" y="100" width="560" height="69"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bAC-Z2-GX6">
+                                        <rect key="frame" x="0.0" y="28" width="91" height="22"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="91" id="xSy-Zp-cSb"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="17"/>
+                                        <state key="normal" title="Begin Trip"/>
+                                    </button>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Current Location" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qgI-qK-yWE">
+                                        <rect key="frame" x="419" y="28" width="120" height="21"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="120" id="Usx-kR-bY8"/>
+                                        </constraints>
+                                        <fontDescription key="fontDescription" name="AvenirNext-Regular" family="Avenir Next" pointSize="15"/>
+                                        <color key="textColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
+                                </subviews>
+                                <color key="backgroundColor" red="0.94085192679999996" green="0.94903725390000004" blue="0.95307987930000004" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="contentStretch" x="0.0" y="0.0" width="0.0" height="0.0"/>
+                                <constraints>
+                                    <constraint firstItem="bAC-Z2-GX6" firstAttribute="top" secondItem="j2T-Lc-BTz" secondAttribute="top" constant="28" id="ArP-Oh-qnr"/>
+                                    <constraint firstAttribute="trailing" secondItem="qgI-qK-yWE" secondAttribute="trailing" constant="21" id="PaR-yG-wLD"/>
+                                    <constraint firstAttribute="bottom" secondItem="bAC-Z2-GX6" secondAttribute="bottom" constant="19" id="Qej-8w-tip"/>
+                                    <constraint firstItem="bAC-Z2-GX6" firstAttribute="top" secondItem="qgI-qK-yWE" secondAttribute="top" id="bQJ-k6-qh0"/>
+                                    <constraint firstItem="bAC-Z2-GX6" firstAttribute="centerY" secondItem="qgI-qK-yWE" secondAttribute="centerY" id="g1g-oE-msa"/>
+                                    <constraint firstItem="bAC-Z2-GX6" firstAttribute="leading" secondItem="j2T-Lc-BTz" secondAttribute="leading" id="irl-rj-vzf"/>
+                                    <constraint firstAttribute="height" constant="69" id="nuZ-Pz-UFP"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
-                            <constraint firstItem="nsc-35-MTe" firstAttribute="leading" secondItem="HE4-02-mb0" secondAttribute="leading" id="YdN-LU-Bp1"/>
-                            <constraint firstItem="nsc-35-MTe" firstAttribute="top" secondItem="HE4-02-mb0" secondAttribute="top" id="b27-P5-1ug"/>
-                            <constraint firstItem="nsc-35-MTe" firstAttribute="bottom" secondItem="GLp-rp-ryS" secondAttribute="top" id="qxz-OC-NpC"/>
-                            <constraint firstAttribute="trailing" secondItem="nsc-35-MTe" secondAttribute="trailing" id="uTY-dt-oMO"/>
+                            <constraint firstItem="j2T-Lc-BTz" firstAttribute="centerX" secondItem="nsc-35-MTe" secondAttribute="centerX" id="8dG-wn-b9u"/>
+                            <constraint firstItem="j2T-Lc-BTz" firstAttribute="top" secondItem="1V6-Hn-ruu" secondAttribute="bottom" constant="56" id="8yg-ml-QTh"/>
+                            <constraint firstItem="j2T-Lc-BTz" firstAttribute="trailing" secondItem="HE4-02-mb0" secondAttribute="trailingMargin" id="Bm1-xn-wCU"/>
+                            <constraint firstItem="j2T-Lc-BTz" firstAttribute="leading" secondItem="HE4-02-mb0" secondAttribute="leadingMargin" id="TgR-eS-9kE"/>
+                            <constraint firstItem="nsc-35-MTe" firstAttribute="top" secondItem="HE4-02-mb0" secondAttribute="top" id="dp6-eY-OAW"/>
+                            <constraint firstItem="nsc-35-MTe" firstAttribute="leading" secondItem="HE4-02-mb0" secondAttribute="leading" id="lBW-4X-uio"/>
+                            <constraint firstItem="nsc-35-MTe" firstAttribute="bottom" secondItem="GLp-rp-ryS" secondAttribute="top" id="udy-un-Ot0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Map" id="YdA-HD-78b">
@@ -58,12 +96,15 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="loc" destination="qgI-qK-yWE" id="kfQ-EQ-Kvd"/>
+                        <outlet property="mapView" destination="nsc-35-MTe" id="C4m-Og-KUf"/>
                         <outlet property="menuButton" destination="rhH-Mc-GbH" id="QVi-fG-i4C"/>
+                        <outlet property="start" destination="bAC-Z2-GX6" id="5aq-Ae-poK"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7TD-bi-rsw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2577" y="51"/>
+            <point key="canvasLocation" x="2557" y="51"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="Xes-CS-RNm">

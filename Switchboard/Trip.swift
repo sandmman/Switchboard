@@ -12,7 +12,7 @@ import Firebase
 import MapKit
 
 class Trip: NSObject {
-    var name: String
+    var name: String?
     var title: String
     var descrip: String
     var timestamp: NSDate?
@@ -30,7 +30,7 @@ class Trip: NSObject {
     
     //we need an initializer for turning a dictionary from firebase into an object
     init(dictionary: Dictionary<String, AnyObject>, snapshot: FDataSnapshot){
-        self.name = dictionary["name"] as! String
+        self.name = dictionary["name"] as? String
         self.title = dictionary["title"] as! String
         self.descrip = dictionary["descrip"] as! String
         let timeInterval = dictionary["timestamp"] as? Double
@@ -43,7 +43,7 @@ class Trip: NSObject {
     
     func toDictionary() -> Dictionary<String, AnyObject> {
         return [
-            "name": name,
+            "name": name!,
             "title": title,
             "descrip":descrip,
             "timestamp": -1 * timestamp!.timeIntervalSince1970,
