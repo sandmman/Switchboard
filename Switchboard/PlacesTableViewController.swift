@@ -49,11 +49,9 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! PlacesTableViewCell
         
-        // Set delegate to get notified when the cell's upvote or downvote buttons are tapped
         cell.delegate = self
         cell.indexPath = indexPath
         
-        //access the yak for this tableview row
         let trip = trips()[indexPath.row]
         cell.postImageView.image = UIImage(named: "japanvillage")
         cell.postTitleLabel.text = trip.descrip
@@ -63,14 +61,33 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
         return cell
     }
     
+    override func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        performSegueWithIdentifier("TripDetailSegue", sender: indexPath)
+    }
+    
     func tripAddedToFeed() {
-        //the YakCenter told us that there are new yaks available, so add them to the feed
         self.tableView.reloadData()
     }
     
     func trips() -> [Trip]{
-        //this function just pulls all of the yaks from the YakCenter
         return TripCenter.sharedInstance.allTrips
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "TripDetailSegue" {
+            print("seguing")
+            let detailVC = segue.destinationViewController as? DetailViewController
+            print(detailVC)
+            let indexPath = sender as? NSIndexPath
+            print(indexPath)
+            if let detailVC = segue.destinationViewController as? DetailViewController,
+                indexPath = sender as? NSIndexPath {
+                    print("seguing more")
+                    //here is how we let the Yak scene know what Yak it needs to display
+                    detailVC.trip = trips()[indexPath.row]
+                    print(detailVC.trip)
+            }
+        }
     }
     /*
     // Override to support conditional editing of the table view.

@@ -10,14 +10,16 @@
 import UIKit
 import MapKit
 import CoreLocation
+import CoreData
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var menuButton:UIBarButtonItem!
     @IBOutlet weak var start:UIButton!
+    @IBOutlet weak var stop:UIButton!
     @IBOutlet weak var loc:UILabel!
     @IBOutlet weak var mapView: MKMapView!
     
-
+    lazy var locations = [CLLocation]()
     var locationManager: CLLocationManager!
     var previousLocation : CLLocation!
     var mapUIView: MapView!
@@ -34,9 +36,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
+        if self.revealViewController() != nil {
+            menuButton.target = self.revealViewController()
+            menuButton.action = "revealToggle:"
+            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
         locationManager = CLLocationManager()
         locationManager.desiredAccuracy = kCLLocationAccuracyBest;
         locationManager.delegate = self;
+        
         
         // user activated automatic authorization info mode
         let status = CLLocationManager.authorizationStatus()
@@ -47,15 +56,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             locationManager.requestAlwaysAuthorization()
             locationManager.requestWhenInUseAuthorization()
         }
-        locationManager.startUpdatingLocation()
-        locationManager.startUpdatingHeading()
         
-        
-        //mapview setup to show user location
-        mapView.delegate = self
-        mapView.showsUserLocation = true
-        mapView.mapType = MKMapType(rawValue: 0)!
-        mapView.userTrackingMode = MKUserTrackingMode(rawValue: 2)!
     }
     
     override func didReceiveMemoryWarning() {
@@ -75,10 +76,41 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.stopUpdatingLocation()
     }
     
-    // MARK :- CLLocationManager delegate
-    func locationManager(manager: CLLocationManager!, didUpdateToLocation newLocation: CLLocation!, fromLocation oldLocation: CLLocation!) {
+    func startLocationUpdates() {
+        // Here, the location manager will be lazily instantiated
+        locationManager.startUpdatingLocation()
+    }
+    @IBAction func startPressed(sender: AnyObject) {
+        print("starting")
+        mapView.removeAnnotations(mapView.annotations)
+        mapView.removeOverlays(mapView.overlays)
+        previousLocation = nil
         
-        //println("present location : \(newLocation.coordinate.latitude),\(newLocation.coordinate.longitude)")
+        locations.removeAll(keepCapacity: false)
+        locationManager.startUpdatingLocation()
+        locationManager.startUpdatingHeading()
+        
+        //mapview setup to show user location
+        mapView.delegate = self
+        mapView.showsUserLocation = true
+        mapView.mapType = MKMapType(rawValue: 0)!
+        mapView.userTrackingMode = MKUserTrackingMode(rawValue: 2)!
+    }
+    
+    @IBAction func stopPressed(sender: AnyObject) {
+        print("stopping")
+        locationManager.stopUpdatingLocation()
+        locationManager.stopUpdatingHeading()
+        createNewTrip()
+    }
+    
+    // MARK :- CLLocationManager delegate
+    func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
+        for location in locations {
+            if location.horizontalAccuracy < 20 {
+                self.locations.append(location)
+            }
+        }
         
         //drawing path or route covered
         if let oldLocationNew = oldLocation as CLLocation?{
@@ -90,7 +122,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         }
         
         
-        //calculation for location selection for pointing annoation
+        //calculation for location selection for pointing annotation
         if let _ = previousLocation as CLLocation?{
             //case if previous location exists
             if previousLocation.distanceFromLocation(newLocation) > 200 {
@@ -103,14 +135,25 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             previousLocation = newLocation
         }
     }
-    
+    func createNewTrip() {
+        var name = "Unidentified"
+        
+        if let savedUser = loadUser() {
+            name = savedUser.firstName + " " + savedUser.lastName
+        }
+        
+        let newTrip = Trip(name: name, title: name,descrip: name, timestamp: NSDate(), locations: locations)
+        TripCenter.sharedInstance.postTrip(newTrip)
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+ 
     // MARK :- MKMapView delegate
     func mapView(mapView: MKMapView!, rendererForOverlay overlay: MKOverlay!) -> MKOverlayRenderer! {
         
         if (overlay is MKPolyline) {
             let pr = MKPolylineRenderer(overlay: overlay)
-            pr.strokeColor = UIColor.redColor()
-            pr.lineWidth = 5
+            pr.strokeColor = UIColor.blueColor()
+            pr.lineWidth = 3
             return pr
         }
         
@@ -144,4 +187,31 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         super.touchesEnded(touches, withEvent: event)
     }
     
+    func loadUser() -> User? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(User.ArchiveURL.path!) as? User
+    }
+    
+    func setUsersClosestCity(newLocation: CLLocation!)
+    {
+        //locationManager.location!.coordinate
+        let geoCoder = CLGeocoder()
+        let locValue = newLocation
+        let location = CLLocation(latitude: locValue!.coordinate.latitude, longitude: locValue!.coordinate.longitude)
+        geoCoder.reverseGeocodeLocation(location)
+            {
+                (placemarks, error) -> Void in
+                
+                let placeArray = placemarks as [CLPlacemark]!
+                
+                // Place details
+                var placeMark: CLPlacemark!
+                placeMark = placeArray?[0]
+                
+                // City
+                if let city = placeMark.addressDictionary?["City"] as? NSString
+                {
+                    self.loc.text = city as String
+                }
+        }
+    }
 }

@@ -9,11 +9,29 @@
 import UIKit
 
 class DetailViewController: UIViewController {
+    @IBOutlet weak var location: UILabel!
+    @IBOutlet weak var author: UILabel!
+    @IBOutlet weak var date: UILabel!
+    @IBOutlet weak var notes: UILabel!
+    
+    var trip: Trip?
+    
+    /*@IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }*/
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        showTripInfo()
+        
+    }
+    
+    func showTripInfo() {
+        author.text = trip?.name
+        date.text = trip?.timestampToReadable()
+        notes.text = trip?.descrip
 
-        // Do any additional setup after loading the view.
     }
 
     override func didReceiveMemoryWarning() {

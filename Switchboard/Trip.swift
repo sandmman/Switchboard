@@ -17,15 +17,15 @@ class Trip: NSObject {
     var descrip: String
     var timestamp: NSDate?
     //var photos: [Reply]
-    var location: CLLocationCoordinate2D?
+    var locations: [CLLocation]?
     var snapshot: FDataSnapshot?
 
-    init(name: String, title: String, descrip: String, timestamp: NSDate?, location: CLLocationCoordinate2D?) {
+    init(name: String, title: String, descrip: String, timestamp: NSDate?, locations: [CLLocation]?) {
         self.name = name
         self.title = title
         self.descrip = descrip
         self.timestamp = timestamp
-        self.location = location
+        self.locations = locations
     }
     
     //we need an initializer for turning a dictionary from firebase into an object
@@ -37,8 +37,7 @@ class Trip: NSObject {
         if (timeInterval != nil){
             self.timestamp = NSDate(timeIntervalSince1970:-1 * timeInterval!)
         }
-        //let value = dictionary["location"] as! NSValue
-        //self.location = value.MKCoordinateValue
+        //self.locations = dictionary["locations"] as? String
     }
     
     func toDictionary() -> Dictionary<String, AnyObject> {
@@ -47,7 +46,7 @@ class Trip: NSObject {
             "title": title,
             "descrip":descrip,
             "timestamp": -1 * timestamp!.timeIntervalSince1970,
-            //"location": NSValue(MKCoordinate: location!)
+            "locations": locations!
         ]
     }
     

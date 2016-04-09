@@ -71,8 +71,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationMan
             name = savedUser.firstName + " " + savedUser.lastName
         }
         
-        let newTrip = Trip(name: name, title: text,descrip: text, timestamp: NSDate(), location: nil)
-        TripCenter.sharedInstance.postTrip(newTrip)
+        //let newTrip = Trip(name: name, title: text,descrip: text, timestamp: NSDate(), location: nil)
+        //TripCenter.sharedInstance.postTrip(newTrip)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     func loadUser() -> User? {
