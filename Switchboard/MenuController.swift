@@ -8,7 +8,7 @@
 
 import UIKit
 
-class MenuController: UITableViewController {
+class MenuController: UITableViewController, UserUpdateDelegate {
 
     @IBOutlet var username:UILabel!
     @IBOutlet var userImage:UIImageView?
@@ -37,7 +37,10 @@ class MenuController: UITableViewController {
     func loadUser() -> User? {
         return NSKeyedUnarchiver.unarchiveObjectWithFile(User.ArchiveURL.path!) as? User
     }
-
+    
+    func userUpdated() {
+        viewDidLoad()
+    }
     
     // MARK: - Table view data source
 

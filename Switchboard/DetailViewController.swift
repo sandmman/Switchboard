@@ -16,10 +16,6 @@ class DetailViewController: UIViewController {
     
     var trip: Trip?
     
-    /*@IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }*/
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -28,7 +24,9 @@ class DetailViewController: UIViewController {
     }
     
     func showTripInfo() {
+
         author.text = trip?.name
+        location.text = trip?.title
         date.text = trip?.timestampToReadable()
         notes.text = trip?.descrip
 

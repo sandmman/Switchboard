@@ -8,6 +8,9 @@
 
 import UIKit
 
+protocol AccountUpdateDelegate {
+    func didUpdateAccount(user: User)
+}
 class AccountTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     @IBOutlet weak var firstName:UITextField!
@@ -18,6 +21,9 @@ class AccountTableViewController: UITableViewController, UIImagePickerController
     
     let imagePicker = UIImagePickerController()
     
+    var delegate: AccountUpdateDelegate?
+    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -30,10 +36,6 @@ class AccountTableViewController: UITableViewController, UIImagePickerController
             handle.text = savedUser.handle
             picture.image = savedUser.profilePicture
         } else {
-            firstName.text = "enter"
-            lastName.text  = "enter"
-            email.text = "enter"
-            handle.text = "enter"
             picture!.image = UIImage(named: "social")
         }
 
@@ -60,13 +62,14 @@ class AccountTableViewController: UITableViewController, UIImagePickerController
         saveUser(firstName.text!, lastName: lastName.text!, email: email.text!, handle: handle.text!, picture: picture)
     }
     
-
     func saveUser(firstName: String, lastName: String, email: String, handle: String, picture: UIImageView) {
         let newUser = User(firstName: firstName, lastName: lastName, email: email, handle: handle, profilePicture: picture.image)
         let isSuccessfulSave = NSKeyedArchiver.archiveRootObject(newUser, toFile: User.ArchiveURL.path!)
         if !isSuccessfulSave {
             print("Failed to save User...")
         }
+        print(delegate)
+        self.delegate?.didUpdateAccount(newUser)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

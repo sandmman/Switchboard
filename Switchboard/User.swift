@@ -11,12 +11,17 @@ import CoreLocation
 import Firebase
 import MapKit
 
+protocol UserUpdateDelegate{
+    func userUpdated()
+}
+
 class User: NSObject, NSCoding {
     var firstName: String
     var lastName: String
     var email: String
     var handle: String
     var profilePicture:UIImage?
+
     
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     static let ArchiveURL = DocumentsDirectory.URLByAppendingPathComponent("user")

@@ -34,19 +34,39 @@ class Trip: NSObject {
         self.title = dictionary["title"] as! String
         self.descrip = dictionary["descrip"] as! String
         let timeInterval = dictionary["timestamp"] as? Double
+        let locations = dictionary["timestamp"] as? [AnyObject]
         if (timeInterval != nil){
             self.timestamp = NSDate(timeIntervalSince1970:-1 * timeInterval!)
+        }
+        if (locations != nil){
+            var locTmp: [CLLocation] = []
+            for coor in locations!{
+                let lat = (coor[0] as! NSString).doubleValue
+                let long = (coor[1] as! NSString).doubleValue
+                let loc = CLLocation(latitude: lat as CLLocationDegrees, longitude: long as CLLocationDegrees)
+                locTmp.append(loc)
+                
+            }
+            
+            self.locations = locTmp
         }
         //self.locations = dictionary["locations"] as? String
     }
     
     func toDictionary() -> Dictionary<String, AnyObject> {
+        var locs: [AnyObject] = []
+        for loc in locations!{
+            let coor  = loc.coordinate
+            let coors = [NSNumber(double: coor.latitude), NSNumber(double: coor.longitude)]
+            locs.append(coors)
+        }
+        
         return [
             "name": name!,
             "title": title,
             "descrip":descrip,
             "timestamp": -1 * timestamp!.timeIntervalSince1970,
-            "locations": locations!
+            "locations": locs
         ]
     }
     

@@ -81,7 +81,6 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         locationManager.startUpdatingLocation()
     }
     @IBAction func startPressed(sender: AnyObject) {
-        print("starting")
         mapView.removeAnnotations(mapView.annotations)
         mapView.removeOverlays(mapView.overlays)
         previousLocation = nil
@@ -98,19 +97,33 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     @IBAction func stopPressed(sender: AnyObject) {
-        print("stopping")
         locationManager.stopUpdatingLocation()
         locationManager.stopUpdatingHeading()
         createNewTrip()
     }
     
+    func formatAddressFromPlacemark(placemark: CLPlacemark) -> String? {
+        return (placemark.addressDictionary!["City"]!) as? String
+    }
     // MARK :- CLLocationManager delegate
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-        for location in locations {
-            if location.horizontalAccuracy < 20 {
-                self.locations.append(location)
-            }
+        
+        
+        if newLocation.horizontalAccuracy < 20 {
+            self.locations.append(newLocation)
         }
+        
+        CLGeocoder().reverseGeocodeLocation(newLocation,
+            completionHandler: {(placemarks:[CLPlacemark]?, error:NSError?) -> Void in
+                if let placemarks = placemarks {
+                    let placemark = placemarks[0]
+                    if let text = self.formatAddressFromPlacemark(placemark) {
+                        self.loc.text = text
+                    } else{
+                        self.loc.text = "Location"
+                    }
+                }
+        })
         
         //drawing path or route covered
         if let oldLocationNew = oldLocation as CLLocation?{
@@ -141,8 +154,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if let savedUser = loadUser() {
             name = savedUser.firstName + " " + savedUser.lastName
         }
-        
-        let newTrip = Trip(name: name, title: name,descrip: name, timestamp: NSDate(), locations: locations)
+        let newTrip = Trip(name: name, title: loc.text!,descrip: "What's up, dog?", timestamp: NSDate(), locations: locations)
         TripCenter.sharedInstance.postTrip(newTrip)
         self.dismissViewControllerAnimated(true, completion: nil)
     }

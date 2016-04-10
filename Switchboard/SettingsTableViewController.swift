@@ -8,17 +8,20 @@
 
 import UIKit
 
-class SettingsTableViewController: UITableViewController {
+
+
+class SettingsTableViewController: UITableViewController, AccountUpdateDelegate {
 
     @IBOutlet weak var menuButton:UIBarButtonItem!
     @IBOutlet var name:UILabel!
     @IBOutlet var profilePic:UIImageView?
+    
+    var delegate: AccountUpdateDelegate?
 
     @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-   
-    
+       
     override func viewDidLoad() {
         super.viewDidLoad()
         if let savedUser = loadUser() {
@@ -27,7 +30,7 @@ class SettingsTableViewController: UITableViewController {
 
         }
         //profilePic!.image = UIImage(named: "menu")
-        
+        //controller.delegate = self
     }
     
     override func didReceiveMemoryWarning() {
@@ -39,6 +42,12 @@ class SettingsTableViewController: UITableViewController {
         return NSKeyedUnarchiver.unarchiveObjectWithFile(User.ArchiveURL.path!) as? User
     }
     
+    func didUpdateAccount(user: User) {
+        print("delegate!")
+        self.name.text = user.firstName
+        //viewDidLoad()
+    }
+
     /*override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
         return 0

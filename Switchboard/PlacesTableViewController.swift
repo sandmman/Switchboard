@@ -54,10 +54,15 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         let trip = trips()[indexPath.row]
         cell.postImageView.image = UIImage(named: "japanvillage")
-        cell.postTitleLabel.text = trip.descrip
-        cell.authorImageView.image = UIImage(named: "author")
+        cell.postTitleLabel.text = trip.title
         cell.timestamp.text = trip.timestampToReadable()
-
+        
+        if let savedUser = loadUser() {
+            cell.authorLabel.text = savedUser.firstName + " " + savedUser.lastName
+            cell.authorImageView.image = savedUser.profilePicture
+            
+        }
+        
         return cell
     }
     
@@ -73,19 +78,16 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
         return TripCenter.sharedInstance.allTrips
     }
     
+    func loadUser() -> User? {
+        return NSKeyedUnarchiver.unarchiveObjectWithFile(User.ArchiveURL.path!) as? User
+    }
+    
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "TripDetailSegue" {
-            print("seguing")
-            let detailVC = segue.destinationViewController as? DetailViewController
-            print(detailVC)
-            let indexPath = sender as? NSIndexPath
-            print(indexPath)
             if let detailVC = segue.destinationViewController as? DetailViewController,
                 indexPath = sender as? NSIndexPath {
-                    print("seguing more")
-                    //here is how we let the Yak scene know what Yak it needs to display
+                    //here is how we let the Detail scene know what Trip it needs to display
                     detailVC.trip = trips()[indexPath.row]
-                    print(detailVC.trip)
             }
         }
     }
