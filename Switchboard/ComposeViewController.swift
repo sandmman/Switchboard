@@ -12,6 +12,9 @@ import CoreLocation
 
 class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationManagerDelegate {
     
+    @IBOutlet var location: UITextField!
+    @IBOutlet var notes: UITextField!
+
     @IBOutlet var textView: UITextView! {
         didSet {
             textView.delegate = self
@@ -22,6 +25,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationMan
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         
         /*let locationManager = CLLocationManager()
         locationManager.delegate = self
@@ -40,7 +44,8 @@ class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationMan
     }
     
     @IBAction func sendButtonPressed(sender: AnyObject) {
-        createNewTrip(textView.text)
+        createNewTrip()
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     // MARK: - UITextView delegate
@@ -64,15 +69,17 @@ class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationMan
     
     // MARK: - Actions
     
-    func createNewTrip(text: String) {
+    func createNewTrip() {
         var name = "Unidentified"
-        
+        var photo = UIImage()
         if let savedUser = loadUser() {
             name = savedUser.firstName + " " + savedUser.lastName
+            photo = savedUser.profilePicture!
         }
+        let newTrip = Trip(name: name, title: location.text!,descrip: notes.text!, userPhoto: photo, timestamp: NSDate())
         
-        //let newTrip = Trip(name: name, title: text,descrip: text, timestamp: NSDate(), location: nil)
-        //TripCenter.sharedInstance.postTrip(newTrip)
+        TripCenter.sharedInstance.postTrip(newTrip)
+        
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     func loadUser() -> User? {

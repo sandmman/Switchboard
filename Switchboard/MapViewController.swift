@@ -22,8 +22,9 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     lazy var locations = [CLLocation]()
     var locationManager: CLLocationManager!
     var previousLocation : CLLocation!
-    var mapUIView: MapView!
    
+    var trip: Trip?
+    
     @IBAction func toggle(sender: AnyObject) {
         navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true)
         //print("Trying")
@@ -99,7 +100,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     @IBAction func stopPressed(sender: AnyObject) {
         locationManager.stopUpdatingLocation()
         locationManager.stopUpdatingHeading()
-        createNewTrip()
+        createNewExcursion()
     }
     
     func formatAddressFromPlacemark(placemark: CLPlacemark) -> String? {
@@ -148,14 +149,14 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
             previousLocation = newLocation
         }
     }
-    func createNewTrip() {
-        var name = "Unidentified"
+    func createNewExcursion() {
         
-        if let savedUser = loadUser() {
-            name = savedUser.firstName + " " + savedUser.lastName
+        if locations.count >= 2 {
+            
+            let newExcursion = Excursion(notes: "", timestamp: NSDate(), locations: locations)
+        
+            TripCenter.sharedInstance.postExcursion(newExcursion, trip: trip!)
         }
-        let newTrip = Trip(name: name, title: loc.text!,descrip: "What's up, dog?", timestamp: NSDate(), locations: locations)
-        TripCenter.sharedInstance.postTrip(newTrip)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
  
@@ -164,11 +165,10 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         if (overlay is MKPolyline) {
             let pr = MKPolylineRenderer(overlay: overlay)
-            pr.strokeColor = UIColor.blueColor()
+            pr.strokeColor = UIColor(red: 0.2039, green: 0.5961, blue: 0.8588, alpha: 1.0)
             pr.lineWidth = 3
             return pr
         }
-        
         return nil
     }
     
@@ -201,29 +201,5 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     
     func loadUser() -> User? {
         return NSKeyedUnarchiver.unarchiveObjectWithFile(User.ArchiveURL.path!) as? User
-    }
-    
-    func setUsersClosestCity(newLocation: CLLocation!)
-    {
-        //locationManager.location!.coordinate
-        let geoCoder = CLGeocoder()
-        let locValue = newLocation
-        let location = CLLocation(latitude: locValue!.coordinate.latitude, longitude: locValue!.coordinate.longitude)
-        geoCoder.reverseGeocodeLocation(location)
-            {
-                (placemarks, error) -> Void in
-                
-                let placeArray = placemarks as [CLPlacemark]!
-                
-                // Place details
-                var placeMark: CLPlacemark!
-                placeMark = placeArray?[0]
-                
-                // City
-                if let city = placeMark.addressDictionary?["City"] as? NSString
-                {
-                    self.loc.text = city as String
-                }
-        }
     }
 }

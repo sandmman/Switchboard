@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol AccountUpdateDelegate {
+protocol AccountViewDelegate {
     func didUpdateAccount(user: User)
 }
 class AccountTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
@@ -21,7 +21,7 @@ class AccountTableViewController: UITableViewController, UIImagePickerController
     
     let imagePicker = UIImagePickerController()
     
-    var delegate: AccountUpdateDelegate?
+    var delegate: AccountViewDelegate?
     
 
     override func viewDidLoad() {
@@ -68,8 +68,7 @@ class AccountTableViewController: UITableViewController, UIImagePickerController
         if !isSuccessfulSave {
             print("Failed to save User...")
         }
-        print(delegate)
-        self.delegate?.didUpdateAccount(newUser)
+        delegate?.didUpdateAccount(newUser)
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     

@@ -8,11 +8,14 @@
 
 import UIKit
 import CoreLocation
+import Photos
 
 class PlacesTableViewController: UITableViewController, CLLocationManagerDelegate, PlacesTableViewCellDelegate, TripFeedDelegate {
     
     @IBOutlet weak var menuButton:UIBarButtonItem!
-
+    var images:NSMutableArray!
+    var totalImageCountNeeded:Int!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -23,9 +26,7 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
         }
 
         TripCenter.sharedInstance.tripFeedDelegate = self
-        
-        //tableView.estimatedRowHeight = 100
-        //tableView.rowHeight = UITableViewAutomaticDimension
+        fetchPhotos()
     }
 
     override func didReceiveMemoryWarning() {
@@ -52,15 +53,20 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
         cell.delegate = self
         cell.indexPath = indexPath
         
+        
         let trip = trips()[indexPath.row]
-        cell.postImageView.image = UIImage(named: "japanvillage")
+
+        
+        let randomIndex = Int(arc4random_uniform(UInt32(images.count)))
+
+        cell.postImageView.image = images[randomIndex] as! UIImage//
         cell.postTitleLabel.text = trip.title
-        cell.timestamp.text = trip.timestampToReadable()
+        cell.timestamp.text = trip.timestampToReadableShortened()
+        
+        cell.authorImageView.image = trip.userPhoto
         
         if let savedUser = loadUser() {
-            cell.authorLabel.text = savedUser.firstName + " " + savedUser.lastName
-            cell.authorImageView.image = savedUser.profilePicture
-            
+            cell.authorLabel.text = savedUser.firstName + " " + savedUser.lastName            
         }
         
         return cell
@@ -88,6 +94,51 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
                 indexPath = sender as? NSIndexPath {
                     //here is how we let the Detail scene know what Trip it needs to display
                     detailVC.trip = trips()[indexPath.row]
+            }
+        }
+    }
+    
+    func fetchPhotos () {
+        images = NSMutableArray()
+        totalImageCountNeeded = 10
+        self.fetchPhotoAtIndexFromEnd(0)
+    }
+    
+    // Repeatedly call the following method while incrementing
+    // the index until all the photos are fetched
+    func fetchPhotoAtIndexFromEnd(index:Int) {
+        
+        let imgManager = PHImageManager.defaultManager()
+        
+        // Note that if the request is not set to synchronous
+        // the requestImageForAsset will return both the image
+        // and thumbnail; by setting synchronous to true it
+        // will return just the thumbnail
+        let requestOptions = PHImageRequestOptions()
+        requestOptions.synchronous = true
+        
+        // Sort the images by creation date
+        let fetchOptions = PHFetchOptions()
+        fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: true)]
+        
+        if let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions) {
+            
+            // If the fetch result isn't empty,
+            // proceed with the image request
+            if fetchResult.count > 0 {
+                // Perform the image request
+                imgManager.requestImageForAsset(fetchResult.objectAtIndex(fetchResult.count - 1 - index) as! PHAsset, targetSize: view.frame.size, contentMode: PHImageContentMode.AspectFill, options: requestOptions, resultHandler: { (image, _) in
+                    self.images.addObject(image!)
+                    
+                    // If you haven't already reached the first
+                    // index of the fetch result and if you haven't
+                    // already stored all of the images you need,
+                    // perform the fetch request again with an
+                    // incremented index
+                    if index + 1 < fetchResult.count && self.images.count < self.totalImageCountNeeded {
+                        self.fetchPhotoAtIndexFromEnd(index + 1)
+                    }
+                })
             }
         }
     }

@@ -10,27 +10,30 @@ import UIKit
 
 
 
-class SettingsTableViewController: UITableViewController, AccountUpdateDelegate {
+class SettingsTableViewController: UITableViewController, AccountViewDelegate {
 
     @IBOutlet weak var menuButton:UIBarButtonItem!
     @IBOutlet var name:UILabel!
     @IBOutlet var profilePic:UIImageView?
     
-    var delegate: AccountUpdateDelegate?
-
+    weak var colors = AccountTableViewController()
+    
     @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
        
     override func viewDidLoad() {
         super.viewDidLoad()
+        //colors!.delegate = self
         if let savedUser = loadUser() {
             name.text = savedUser.firstName + " " + savedUser.lastName
             profilePic!.image = savedUser.profilePicture
 
+        } else {
+            profilePic!.image = UIImage(named: "social")
         }
-        //profilePic!.image = UIImage(named: "menu")
-        //controller.delegate = self
+        //var secondViewController = (userSegue.destinationViewController.visibleViewController as  AccountTableViewController)
+        //secondViewController.delegate = self
     }
     
     override func didReceiveMemoryWarning() {

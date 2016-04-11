@@ -19,6 +19,9 @@ class MenuController: UITableViewController, UserUpdateDelegate {
             username.text = savedUser.firstName + " " + savedUser.lastName
             userImage!.image = savedUser.profilePicture
             
+        } else{
+            username.text = "Username"
+            userImage!.image = UIImage(named: "social")
         }
         
 
