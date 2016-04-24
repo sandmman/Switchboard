@@ -8,7 +8,9 @@
 
 import UIKit
 
-
+protocol AccountViewDelegate {
+    func didUpdateAccount(user: User)
+}
 
 class SettingsTableViewController: UITableViewController, AccountViewDelegate {
 
@@ -18,16 +20,29 @@ class SettingsTableViewController: UITableViewController, AccountViewDelegate {
     
     weak var colors = AccountTableViewController()
     
+    var delegate: User?
+    
     @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.performSegueWithIdentifier("menuToSettings", sender: self)
     }
-       
+    
+    @IBAction func unwindFromSecondVC(segue: UIStoryboardSegue) {
+        // Here you can receive the parameter(s) from secondVC
+        let _ : AccountTableViewController = segue.sourceViewController as! AccountTableViewController
+        viewDidLoad()
+    }
+
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         //colors!.delegate = self
         if let savedUser = loadUser() {
             name.text = savedUser.firstName + " " + savedUser.lastName
             profilePic!.image = savedUser.profilePicture
+            profilePic!.layer.cornerRadius = 20.0
+            profilePic!.clipsToBounds = true
+            profilePic!.layer.borderColor = UIColor.purpleColor().CGColor
+            profilePic!.layer.borderWidth = 2.0
 
         } else {
             profilePic!.image = UIImage(named: "social")

@@ -8,10 +8,8 @@
 
 import UIKit
 
-protocol AccountViewDelegate {
-    func didUpdateAccount(user: User)
-}
-class AccountTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+
+class AccountTableViewController: UITableViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate  {
     
     @IBOutlet weak var firstName:UITextField!
     @IBOutlet weak var lastName:UITextField!
@@ -23,7 +21,10 @@ class AccountTableViewController: UITableViewController, UIImagePickerController
     
     var delegate: AccountViewDelegate?
     
-
+    func didUpdateAccount(user: User){
+        
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -54,7 +55,7 @@ class AccountTableViewController: UITableViewController, UIImagePickerController
     }
     
     @IBAction func cancelButtonPressed(sender: UIBarButtonItem) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.performSegueWithIdentifier("unwindToMenu", sender: self)
     }
 
     
@@ -69,7 +70,7 @@ class AccountTableViewController: UITableViewController, UIImagePickerController
             print("Failed to save User...")
         }
         delegate?.didUpdateAccount(newUser)
-        self.dismissViewControllerAnimated(true, completion: nil)
+        self.performSegueWithIdentifier("unwindToMenu", sender: self)
     }
     
     func loadUser() -> User? {

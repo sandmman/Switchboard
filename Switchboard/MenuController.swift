@@ -18,18 +18,17 @@ class MenuController: UITableViewController, UserUpdateDelegate {
         if let savedUser = loadUser() {
             username.text = savedUser.firstName + " " + savedUser.lastName
             userImage!.image = savedUser.profilePicture
+            userImage!.layer.cornerRadius = 20.0
+            userImage!.clipsToBounds = true
+            userImage!.layer.borderColor = UIColor.blackColor().CGColor
+            userImage!.layer.borderWidth = 2.0
             
         } else{
             username.text = "Username"
             userImage!.image = UIImage(named: "social")
         }
         
-
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem()
+        
     }
 
     override func didReceiveMemoryWarning() {
@@ -42,6 +41,12 @@ class MenuController: UITableViewController, UserUpdateDelegate {
     }
     
     func userUpdated() {
+        viewDidLoad()
+    }
+    
+    @IBAction func unwindFromSecondVC(segue: UIStoryboardSegue) {
+        // Here you can receive the parameter(s) from secondVC
+        let _ : SettingsTableViewController = segue.sourceViewController as! SettingsTableViewController
         viewDidLoad()
     }
     

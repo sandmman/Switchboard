@@ -41,11 +41,11 @@ class User: NSObject, NSCoding {
         aCoder.encodeObject(profilePicture, forKey: PropertyKey.photoKey)
     }
     required convenience init?(coder aDecoder: NSCoder) {
-        let firstName = aDecoder.decodeObjectForKey(PropertyKey.firstNameKey) as! String
-        let lastName = aDecoder.decodeObjectForKey(PropertyKey.lastNameKey) as! String
-        let email = aDecoder.decodeObjectForKey(PropertyKey.emailKey) as! String
-        let handle = aDecoder.decodeObjectForKey(PropertyKey.handleKey) as! String
-        let photo = aDecoder.decodeObjectForKey(PropertyKey.photoKey) as? UIImage
+        let firstName   = aDecoder.decodeObjectForKey(PropertyKey.firstNameKey) as! String
+        let lastName    = aDecoder.decodeObjectForKey(PropertyKey.lastNameKey) as! String
+        let email       = aDecoder.decodeObjectForKey(PropertyKey.emailKey) as! String
+        let handle      = aDecoder.decodeObjectForKey(PropertyKey.handleKey) as! String
+        let photo       = aDecoder.decodeObjectForKey(PropertyKey.photoKey) as? UIImage
         
         self.init(firstName: firstName, lastName: lastName, email: email, handle: handle, profilePicture: photo)
     }
@@ -63,8 +63,6 @@ class User: NSObject, NSCoding {
         self.lastName   = dictionary["lastName"] as! String
         self.email      = dictionary["email"] as! String
         self.handle     = dictionary["handle"] as! String
-        //let value = dictionary["location"] as! NSValue
-        //self.location = value.MKCoordinateValue
     }
 
     func toDictionary() -> Dictionary<String, AnyObject> {

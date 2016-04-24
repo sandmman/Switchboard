@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = 'E1E3A344A5C4C8FCC549F4D1'
+               BlueprintIdentifier = '5516DD3A1B2B06BE5DC3019B'
                BlueprintName = 'Pods-SwitchboardTests'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'Pods_SwitchboardTests.framework'>

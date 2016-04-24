@@ -7,13 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		49D99D6D930E9AE73CD4BC0B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EE57EC6BED0EC1BD7D6DBA8 /* Pods.framework */; };
+		49D99D6D930E9AE73CD4BC0B /* Pods.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EE57EC6BED0EC1BD7D6DBA8 /* Pods.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		E31F8AC51CBC18310027D488 /* LoadAnimationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31F8AC41CBC18310027D488 /* LoadAnimationView.swift */; };
+		E31F8AC71CBDE1660027D488 /* FeedTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E31F8AC61CBDE1660027D488 /* FeedTableViewController.swift */; };
 		E35BBF821CB9F533001F6846 /* Images-2.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E35BBF811CB9F533001F6846 /* Images-2.xcassets */; };
 		E35BBF841CBAF7ED001F6846 /* Excursion.swift in Sources */ = {isa = PBXBuildFile; fileRef = E35BBF831CBAF7ED001F6846 /* Excursion.swift */; };
 		E3CA83961CB629FD003C9BD7 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83871CB629C6003C9BD7 /* AppDelegate.swift */; };
 		E3CA83991CB629FD003C9BD7 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA838E1CB629C6003C9BD7 /* MapViewController.swift */; };
 		E3CA839A1CB629FD003C9BD7 /* MenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA838F1CB629C6003C9BD7 /* MenuController.swift */; };
-		E3CA839B1CB629FD003C9BD7 /* PlacesTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83901CB629C6003C9BD7 /* PlacesTableViewCell.swift */; };
+		E3CA839B1CB629FD003C9BD7 /* TripTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83901CB629C6003C9BD7 /* TripTableViewCell.swift */; };
 		E3CA839C1CB629FD003C9BD7 /* PlacesTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83911CB629C6003C9BD7 /* PlacesTableViewController.swift */; };
 		E3CA839D1CB629FD003C9BD7 /* PhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83921CB629C6003C9BD7 /* PhotoViewController.swift */; };
 		E3CA83A01CB629FD003C9BD7 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E3CA83951CB629C6003C9BD7 /* SWRevealViewController.m */; };
@@ -45,6 +47,9 @@
 		01E098423C4EA91FB1F983C4 /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		2EE57EC6BED0EC1BD7D6DBA8 /* Pods.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		38D28BC5B49C205A7C052D0C /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
+		E31F8AC21CBB3DDF0027D488 /* Pods_Switchboard.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Pods_Switchboard.framework; path = "Pods/../build/Debug-iphoneos/Pods_Switchboard.framework"; sourceTree = "<group>"; };
+		E31F8AC41CBC18310027D488 /* LoadAnimationView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoadAnimationView.swift; sourceTree = "<group>"; };
+		E31F8AC61CBDE1660027D488 /* FeedTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FeedTableViewController.swift; sourceTree = "<group>"; };
 		E35BBF811CB9F533001F6846 /* Images-2.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Images-2.xcassets"; sourceTree = "<group>"; };
 		E35BBF831CBAF7ED001F6846 /* Excursion.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Excursion.swift; sourceTree = "<group>"; };
 		E3CA83871CB629C6003C9BD7 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -52,7 +57,7 @@
 		E3CA838C1CB629C6003C9BD7 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E3CA838E1CB629C6003C9BD7 /* MapViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		E3CA838F1CB629C6003C9BD7 /* MenuController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MenuController.swift; sourceTree = "<group>"; };
-		E3CA83901CB629C6003C9BD7 /* PlacesTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesTableViewCell.swift; sourceTree = "<group>"; };
+		E3CA83901CB629C6003C9BD7 /* TripTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TripTableViewCell.swift; sourceTree = "<group>"; };
 		E3CA83911CB629C6003C9BD7 /* PlacesTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesTableViewController.swift; sourceTree = "<group>"; };
 		E3CA83921CB629C6003C9BD7 /* PhotoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewController.swift; sourceTree = "<group>"; };
 		E3CA83931CB629C6003C9BD7 /* Switchboard-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Switchboard-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -96,6 +101,7 @@
 		0432D794F0A56BC5F05108E6 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E31F8AC21CBB3DDF0027D488 /* Pods_Switchboard.framework */,
 				2EE57EC6BED0EC1BD7D6DBA8 /* Pods.framework */,
 			);
 			name = Frameworks;
@@ -121,13 +127,15 @@
 				F4702A0A1A7F27DC00E30A3C /* Info.plist */,
 				E3CA83881CB629C6003C9BD7 /* LaunchScreen.xib */,
 				E3FCE9A21CB97461003C79F8 /* Main.storyboard */,
+				E31F8AC61CBDE1660027D488 /* FeedTableViewController.swift */,
 				E3FCE9A01CB89294003C79F8 /* MapView.swift */,
 				E3CA838E1CB629C6003C9BD7 /* MapViewController.swift */,
 				E3CA838F1CB629C6003C9BD7 /* MenuController.swift */,
 				E3CA83AD1CB6A6AF003C9BD7 /* Model */,
 				E3CA83921CB629C6003C9BD7 /* PhotoViewController.swift */,
-				E3CA83901CB629C6003C9BD7 /* PlacesTableViewCell.swift */,
+				E3CA83901CB629C6003C9BD7 /* TripTableViewCell.swift */,
 				E3CA83911CB629C6003C9BD7 /* PlacesTableViewController.swift */,
+				E31F8AC41CBC18310027D488 /* LoadAnimationView.swift */,
 				E3CA83A91CB6A29D003C9BD7 /* SettingsTableViewController.swift */,
 				E3CA83931CB629C6003C9BD7 /* Switchboard-Bridging-Header.h */,
 				E3CA83941CB629C6003C9BD7 /* SWRevealViewController.h */,
@@ -330,10 +338,12 @@
 				E3FCE99D1CB75D14003C79F8 /* User.swift in Sources */,
 				E3CA839A1CB629FD003C9BD7 /* MenuController.swift in Sources */,
 				E3FCE9A11CB89294003C79F8 /* MapView.swift in Sources */,
-				E3CA839B1CB629FD003C9BD7 /* PlacesTableViewCell.swift in Sources */,
+				E3CA839B1CB629FD003C9BD7 /* TripTableViewCell.swift in Sources */,
+				E31F8AC51CBC18310027D488 /* LoadAnimationView.swift in Sources */,
 				E3CA839C1CB629FD003C9BD7 /* PlacesTableViewController.swift in Sources */,
 				E35BBF841CBAF7ED001F6846 /* Excursion.swift in Sources */,
 				E3CA839D1CB629FD003C9BD7 /* PhotoViewController.swift in Sources */,
+				E31F8AC71CBDE1660027D488 /* FeedTableViewController.swift in Sources */,
 				E3FCE99F1CB821B9003C79F8 /* AccountTableViewController.swift in Sources */,
 				E3CA83A01CB629FD003C9BD7 /* SWRevealViewController.m in Sources */,
 				E3CA83B71CB6BED7003C9BD7 /* TripCenter.swift in Sources */,
@@ -465,7 +475,12 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = Switchboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.appcoda.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Switchboard;
@@ -484,7 +499,12 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/build/Debug-iphoneos",
+				);
 				INFOPLIST_FILE = Switchboard/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.appcoda.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = Switchboard;

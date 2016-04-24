@@ -1,16 +1,15 @@
 //
-//  PlacesTableViewController.swift
+//  FeedTableViewController.swift
 //  Switchboard
 //
-//  Created by Aaron Liberatore on 4/7/16.
+//  Created by Aaron Liberatore on 4/12/16.
 //  Copyright © 2016 Aaron. All rights reserved.
 //
-
 import UIKit
 import CoreLocation
 import Photos
 
-class PlacesTableViewController: UITableViewController, CLLocationManagerDelegate, TripTableViewCellDelegate, TripFeedDelegate {
+class FeedTableViewController: UITableViewController, CLLocationManagerDelegate, TripTableViewCellDelegate, TripFeedDelegate {
     
     @IBOutlet weak var menuButton:UIBarButtonItem!
     var images:NSMutableArray!
@@ -20,7 +19,7 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
     var username: String?
     
     let progressIndicatorView = LoadAnimationView(frame: CGRectZero)
-    let imgManager = PHImageManager.defaultManager()
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,28 +32,27 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         TripCenter.sharedInstance.tripFeedDelegate = self
         
-        checkPhotoLibraryPermission()
-        
+        fetchPhotos()
         loadUser()
     }
-
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
+    
     // MARK: - Table view data source
-
+    
     override func numberOfSectionsInTableView(tableView: UITableView) -> Int {
         // Return the number of sections.
         return 1
     }
-
+    
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // Return the number of rows in the section.
         return trips().count
     }
-
+    
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("Cell", forIndexPath: indexPath) as! TripTableViewCell
@@ -64,11 +62,10 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
         
         
         let trip = trips()[indexPath.row]
-        if(images != nil && images.count > 0){
-            let randomIndex = Int(arc4random_uniform(UInt32(images.count)))
-
-            cell.postImageView.image = images[randomIndex] as! UIImage
-        }
+        
+        let randomIndex = Int(arc4random_uniform(UInt32(images.count)))
+        
+        cell.postImageView.image = images[randomIndex] as! UIImage
         cell.postTitleLabel.text = trip.title
         cell.timestamp.text = trip.timestampToReadableShortened()
         
@@ -107,7 +104,7 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
     
     func fetchImages() {
         
-        //let imgManager = PHImageManager.defaultManager()
+        let imgManager = PHImageManager.defaultManager()
         
         let requestOptions = PHImageRequestOptions()
         requestOptions.synchronous = true
@@ -117,6 +114,7 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
         fetchOptions.sortDescriptors = [NSSortDescriptor(key:"creationDate", ascending: true)]
         
         if let fetchResult: PHFetchResult = PHAsset.fetchAssetsWithMediaType(PHAssetMediaType.Image, options: fetchOptions) {
+            
             // Fetch a specicific number of photos
             for i in 0...fetchResult.count-1 {
                 
@@ -137,71 +135,50 @@ class PlacesTableViewController: UITableViewController, CLLocationManagerDelegat
             }
         }
     }
-    func checkPhotoLibraryPermission() -> Void {
-        let status = PHPhotoLibrary.authorizationStatus()
-        switch status {
-        case .Authorized:
-             fetchPhotos()
-        case .Denied, .Restricted :
-            //handle denied status
-            return
-        case .NotDetermined:
-            // ask for permissions
-            PHPhotoLibrary.requestAuthorization() { (status) -> Void in
-                switch status {
-                case .Authorized:
-                    self.fetchPhotos()
-                case .Denied, .Restricted:
-                    return
-                case .NotDetermined:
-                    return
-                }
-            }
-        }
-    }
     /*
     // Override to support conditional editing of the table view.
     override func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the specified item to be editable.
-        return true
+    // Return NO if you do not want the specified item to be editable.
+    return true
     }
     */
-
+    
     /*
     // Override to support editing the table view.
     override func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
-        if editingStyle == .Delete {
-            // Delete the row from the data source
-            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
-        } else if editingStyle == .Insert {
-            // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-        }    
+    if editingStyle == .Delete {
+    // Delete the row from the data source
+    tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Fade)
+    } else if editingStyle == .Insert {
+    // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
+    }
     }
     */
-
+    
     /*
     // Override to support rearranging the table view.
     override func tableView(tableView: UITableView, moveRowAtIndexPath fromIndexPath: NSIndexPath, toIndexPath: NSIndexPath) {
-
+    
     }
     */
-
+    
     /*
     // Override to support conditional rearranging of the table view.
     override func tableView(tableView: UITableView, canMoveRowAtIndexPath indexPath: NSIndexPath) -> Bool {
-        // Return NO if you do not want the item to be re-orderable.
-        return true
+    // Return NO if you do not want the item to be re-orderable.
+    return true
     }
     */
-
+    
     /*
     // MARK: - Navigation
-
+    
     // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+    // Get the new view controller using [segue destinationViewController].
+    // Pass the selected object to the new view controller.
     }
     */
-
+    
 }
+

@@ -15,12 +15,14 @@ class Excursion: NSObject {
     var notes: String
     var timestamp: NSDate?
     var locations: [CLLocation]?
+    var distance: Double?
     var snapshot: FDataSnapshot?
     
-    init(notes: String, timestamp: NSDate?, locations: [CLLocation]?) {
+    init(notes: String, timestamp: NSDate?, locations: [CLLocation]?, distance: Double?) {
         self.notes = notes
         self.timestamp = timestamp
         self.locations = locations
+        self.distance = distance
     }
     
     //we need an initializer for turning a dictionary from firebase into an object
@@ -43,6 +45,7 @@ class Excursion: NSObject {
             }
             self.locations = locTmp
         }
+        self.distance = dictionary["distance"] as? Double
         self.snapshot = snapshot
     }
     
@@ -57,6 +60,7 @@ class Excursion: NSObject {
             "notes":notes,
             "timestamp": -1 * timestamp!.timeIntervalSince1970,
             "locations": locs,
+            "distance": distance!
         ]
     }
     

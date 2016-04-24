@@ -14,10 +14,46 @@ import CoreData
 
 class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerDelegate {
     @IBOutlet weak var menuButton:UIBarButtonItem!
-    @IBOutlet weak var start:UIButton!
-    @IBOutlet weak var stop:UIButton!
     @IBOutlet weak var loc:UILabel!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var startStop:UIButton!
+    
+    var distance = 0.0
+    
+    var launchBool: Bool = false {
+        didSet {
+            if launchBool == true {
+                
+                distance = 0.0
+                
+                mapView.removeAnnotations(mapView.annotations)
+                mapView.removeOverlays(mapView.overlays)
+                previousLocation = nil
+                
+                locations.removeAll(keepCapacity: false)
+                locationManager.startUpdatingLocation()
+                locationManager.startUpdatingHeading()
+                
+                //mapview setup to show user location
+                mapView.delegate = self
+                mapView.showsUserLocation = true
+                mapView.mapType = MKMapType(rawValue: 0)!
+                mapView.userTrackingMode = MKUserTrackingMode(rawValue: 2)!
+                startStop.setTitle("End", forState: .Normal)
+                
+                
+            } else {
+                locationManager.stopUpdatingLocation()
+                locationManager.stopUpdatingHeading()
+                createNewExcursion()
+                
+                // Reset Markers
+                startStop.setTitle("Start Excursion", forState: .Normal)
+                
+
+            }
+        }
+    }
     
     lazy var locations = [CLLocation]()
     var locationManager: CLLocationManager!
@@ -25,26 +61,15 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
    
     var trip: Trip?
     
-    @IBAction func toggle(sender: AnyObject) {
-        navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true)
-        //print("Trying")
-    }
 
-    func toggle1() {
-        navigationController?.setNavigationBarHidden(navigationController?.navigationBarHidden == false, animated: true)
-    }
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
         
-        if self.revealViewController() != nil {
-            menuButton.target = self.revealViewController()
-            menuButton.action = "revealToggle:"
-            self.view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
         
         locationManager = CLLocationManager()
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest;
+        // This version only uses cell tower triangulation, so it should work in cities fine with low power
+        locationManager.desiredAccuracy = kCLLocationAccuracyKilometer;
         locationManager.delegate = self;
         
         
@@ -81,34 +106,16 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         // Here, the location manager will be lazily instantiated
         locationManager.startUpdatingLocation()
     }
-    @IBAction func startPressed(sender: AnyObject) {
-        mapView.removeAnnotations(mapView.annotations)
-        mapView.removeOverlays(mapView.overlays)
-        previousLocation = nil
-        
-        locations.removeAll(keepCapacity: false)
-        locationManager.startUpdatingLocation()
-        locationManager.startUpdatingHeading()
-        
-        //mapview setup to show user location
-        mapView.delegate = self
-        mapView.showsUserLocation = true
-        mapView.mapType = MKMapType(rawValue: 0)!
-        mapView.userTrackingMode = MKUserTrackingMode(rawValue: 2)!
+    @IBAction func buttonAction(sender: AnyObject) {
+        launchBool = !launchBool //true to false, false to true...
     }
     
-    @IBAction func stopPressed(sender: AnyObject) {
-        locationManager.stopUpdatingLocation()
-        locationManager.stopUpdatingHeading()
-        createNewExcursion()
-    }
     
     func formatAddressFromPlacemark(placemark: CLPlacemark) -> String? {
-        return (placemark.addressDictionary!["City"]!) as? String
-    }
+        return "Current Location"//(placemark.addressDictionary!["City"]!) as? String
+    } //Because you set a custom coordinate, instead of the established one
     // MARK :- CLLocationManager delegate
     func locationManager(manager: CLLocationManager, didUpdateToLocation newLocation: CLLocation, fromLocation oldLocation: CLLocation) {
-        
         
         if newLocation.horizontalAccuracy < 20 {
             self.locations.append(newLocation)
@@ -130,6 +137,8 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if let oldLocationNew = oldLocation as CLLocation?{
             let oldCoordinates = oldLocationNew.coordinate
             let newCoordinates = newLocation.coordinate
+            let x = oldLocation.distanceFromLocation(newLocation)
+            distance += x
             var area = [oldCoordinates, newCoordinates]
             let polyline = MKPolyline(coordinates: &area, count: area.count)
             mapView.addOverlay(polyline)
@@ -140,12 +149,12 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         if let _ = previousLocation as CLLocation?{
             //case if previous location exists
             if previousLocation.distanceFromLocation(newLocation) > 200 {
-                addAnnotationsOnMap(newLocation)
+                //addAnnotationsOnMap(newLocation)
                 previousLocation = newLocation
             }
         }else{
             //case if previous location doesn't exists
-            addAnnotationsOnMap(newLocation)
+            //addAnnotationsOnMap(newLocation)
             previousLocation = newLocation
         }
     }
@@ -153,11 +162,11 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
         
         if locations.count >= 2 {
             
-            let newExcursion = Excursion(notes: "", timestamp: NSDate(), locations: locations)
+            let newExcursion = Excursion(notes: "", timestamp: NSDate(), locations: locations, distance: distance)
         
             TripCenter.sharedInstance.postExcursion(newExcursion, trip: trip!)
         }
-        self.dismissViewControllerAnimated(true, completion: nil)
+        navigationController!.popViewControllerAnimated(true)
     }
  
     // MARK :- MKMapView delegate
@@ -173,7 +182,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
     }
     
     //function to add annotation to map view
-    func addAnnotationsOnMap(locationToPoint : CLLocation){
+    /*func addAnnotationsOnMap(locationToPoint : CLLocation){
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = locationToPoint.coordinate
@@ -186,18 +195,7 @@ class MapViewController: UIViewController, MKMapViewDelegate, CLLocationManagerD
                 self.mapView.addAnnotation(annotation)
             }
         })
-    }
-    override func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if let _ = touches.first {
-            toggle1()
-        }
-    }
-    override func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        if let _ = touches.first{
-             toggle1()
-        }
-        super.touchesEnded(touches, withEvent: event)
-    }
+    }*/
     
     func loadUser() -> User? {
         return NSKeyedUnarchiver.unarchiveObjectWithFile(User.ArchiveURL.path!) as? User

@@ -1,5 +1,5 @@
 //
-//  PlacesTableViewCell.swift
+//  TripTableViewCell.swift
 //  Switchboard
 //
 //  Created by Aaron Liberatore on 4/7/16.
@@ -8,11 +8,11 @@
 
 import UIKit
 
-protocol PlacesTableViewCellDelegate {
+protocol TripTableViewCellDelegate {
 
 }
 
-class PlacesTableViewCell: UITableViewCell {
+class TripTableViewCell: UITableViewCell {
     
     @IBOutlet weak var postImageView:UIImageView!
     @IBOutlet weak var authorImageView:UIImageView!
@@ -20,7 +20,7 @@ class PlacesTableViewCell: UITableViewCell {
     @IBOutlet weak var authorLabel:UILabel!
     @IBOutlet weak var timestamp:UILabel!
     
-    var delegate: PlacesTableViewCellDelegate?
+    var delegate: TripTableViewCellDelegate?
     var indexPath: NSIndexPath?
     
     override func awakeFromNib() {

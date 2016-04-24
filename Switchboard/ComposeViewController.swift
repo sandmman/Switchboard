@@ -13,13 +13,9 @@ import CoreLocation
 class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationManagerDelegate {
     
     @IBOutlet var location: UITextField!
-    @IBOutlet var notes: UITextField!
-
-    @IBOutlet var textView: UITextView! {
-        didSet {
-            textView.delegate = self
-        }
-    }
+    @IBOutlet var username: UILabel!
+    @IBOutlet var profilePic: UIImageView!
+    @IBOutlet var textView: UITextView!
         
     //var loc: CLLocationCoordinate2D
     
@@ -27,13 +23,28 @@ class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationMan
         super.viewDidLoad()
         
         
-        /*let locationManager = CLLocationManager()
-        locationManager.delegate = self
-        locationManager.desiredAccuracy = kCLLocationAccuracyBest
-        locationManager.requestAlwaysAuthorization()
-        locationManager.startUpdatingLocation()*/
+        if let savedUser = loadUser() {
+            username.text = savedUser.firstName + " " + savedUser.lastName
+            profilePic!.image = savedUser.profilePicture
+            
+        } else{
+            username.text = "Username"
+            profilePic!.image = UIImage(named: "social")
+        }
+        
+        let borderColor : UIColor = UIColor(red: 0.75, green: 0.75, blue: 0.75, alpha: 1.0)
+        
+        textView.layer.borderWidth = 0.5
+        textView.layer.borderColor = borderColor.CGColor
+        textView.layer.cornerRadius = 8.0
+        
+        profilePic.layer.cornerRadius = 10.0
+        profilePic.clipsToBounds = true
+        profilePic.layer.borderColor = UIColor.blackColor().CGColor
+        profilePic.layer.borderWidth = 2.0
+        
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -76,7 +87,7 @@ class ComposeViewController: UIViewController, UITextViewDelegate, CLLocationMan
             name = savedUser.firstName + " " + savedUser.lastName
             photo = savedUser.profilePicture!
         }
-        let newTrip = Trip(name: name, title: location.text!,descrip: notes.text!, userPhoto: photo, timestamp: NSDate())
+        let newTrip = Trip(name: name, title: location.text!, descrip: textView.text!, userPhoto: photo, timestamp: NSDate())
         
         TripCenter.sharedInstance.postTrip(newTrip)
         

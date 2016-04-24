@@ -34,7 +34,7 @@ class Trip: NSObject {
         self.name = dictionary["name"] as? String
         self.title = dictionary["title"] as! String
         self.descrip = dictionary["descrip"] as! String
-        let photo = dictionary["photo"] as? String
+        let photo = dictionary["userPhoto"] as? String
         self.excursions = [Excursion]()
         let timeInterval = dictionary["timestamp"] as? Double
         if (timeInterval != nil){
@@ -50,8 +50,8 @@ class Trip: NSObject {
     
     func toDictionary() -> Dictionary<String, AnyObject> {
 
-        let imageData: NSData = UIImageJPEGRepresentation(userPhoto!, 1.0)!
-        let base64String = imageData.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        let imageData: NSData = UIImagePNGRepresentation(userPhoto!)!
+        let base64String: NSString = imageData.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
 
         return [
             "name": name!,
